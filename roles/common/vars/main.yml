@@ -1,0 +1,10 @@
+---
+
+# Common/basic packages for both master and nodes
+common_packages:
+  - aptitude
+  - chrony
+  - vim
+  - zsh
+
+# vim: set ft=yaml sw=2:
