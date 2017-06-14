@@ -1,0 +1,37 @@
+---
+#
+# Variables for the master node only
+#
+
+#
+# WAN
+#
+
+# Interface attached to the WAN
+wan_if: eth1
+
+#
+# LAN for the cluster nodes
+#
+
+# Interface attached to the cluster LAN
+lan_if: eth0
+# LAN IP for the master
+lan_ip: 192.168.1.254
+
+lan_dhcp_begin: 192.168.1.1
+lan_dhcp_end: 192.168.1.200
+lan_netmask: 255.255.255.0
+
+#
+# Auto system installation for nodes
+#
+
+tftp_root: /srv/tftp
+
+# Mirror from where to install packages
+apt_mirror: ftp.sjtu.edu.cn
+# Source for the security updates
+apt_security_host: ftp.sjtu.edu.cn
+
+# vim: set ft=yaml sw=2:

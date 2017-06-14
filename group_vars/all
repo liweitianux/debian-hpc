@@ -1,0 +1,10 @@
+---
+# Cluster name
+# Also to be used as the hostname of the master node,
+# and as the NIS domain name
+cluster_name: xcluster
+
+# Number of cluster nodes (exclude the master node)
+num_nodes: 3
+
+# vim: set ft=yaml sw=2:
