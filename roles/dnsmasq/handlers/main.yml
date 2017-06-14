@@ -1,0 +1,7 @@
+---
+- name: Restart dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
+
+# vim: set ft=yaml sw=2:

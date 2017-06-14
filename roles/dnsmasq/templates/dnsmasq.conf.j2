@@ -1,0 +1,54 @@
+#
+# /etc/dnsmasq.conf
+# Configuration file for dnsmasq.
+# See "dnsmasq --help" or dnsmasq(8) for details.
+#
+
+# If you want dnsmasq to listen for DHCP and DNS requests only on
+# specified interfaces (and the loopback) give the name of the
+# interface (eg eth0) here.
+# Repeat the line for more than one interface.
+interface={{ lan_if }}
+
+##
+## DHCP server
+##
+
+# Enable the integrated DHCP server, you need to supply the range
+# of addresses available for lease and optionally a lease time.
+# If you have more than one network, you will need to repeat this
+# for each network on which you want to supply DHCP service.
+dhcp-range={{ lan_dhcp_begin }},{{ lan_dhcp_end }},static,{{ lan_netmask }},infinite
+
+# Ignore any clients which are not specified in dhcp-host lines
+# or /etc/ethers. Equivalent to ISC "deny unknown-clients".
+# This relies on the special "known" tag which is set when
+# a host is matched.
+dhcp-ignore=tag:!known
+
+# Read /etc/ethers and act on the ethernet-address/IP pairs
+# found there just as if they had been given as --dhcp-host
+# options. Useful if you keep MAC-address/host mappings there
+# for other purposes.
+read-ethers
+
+# Set the NIS domain name
+dhcp-option=40,{{ cluster_name }}
+
+# Set the boot filename for netboot/PXE. You will only need
+# this is you want to boot machines over the network and you
+# will need a TFTP server; either dnsmasq's built in TFTP
+# server or an external one.
+dhcp-boot=pxelinux.0
+
+##
+## TFTP server
+##
+
+# Enable dnsmasq's built-in TFTP server
+enable-tftp
+
+# Set the root directory for files available via FTP.
+tftp-root={{ tftp_root }}
+
+# vim: set ft=conf:
