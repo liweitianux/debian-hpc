@@ -1,0 +1,30 @@
+---
+- name: Ensure that the Apache web server is not installed
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ apache_packages_to_remove }}"
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Update Nginx configuration
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Nginx
+
+- name: Set up Nginx sites
+  file:
+    path: /etc/nginx/{{ item }}
+    state: directory
+  with_items:
+    - sites-available
+    - sites-enabled
+
+# vim: set ft=yaml sw=2:
