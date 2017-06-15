@@ -1,0 +1,34 @@
+#
+# /etc/nginx/sites-available/apt-proxy.site
+# Nginx site: apt mirror proxy for LAN nodes
+#
+
+server {
+    listen  80;
+    listen  [::]:80;
+
+    access_log  /var/log/nginx/apt.access.log;
+    error_log   /var/log/nginx/apt.error.log;
+
+    allow  {{ lan_network }};
+    deny   all;
+
+    location /debian/ {
+        try_files  $uri @mirror;
+    }
+    location /debian-security/ {
+        try_files  $uri @mirror;
+    }
+
+    location @mirror {
+        proxy_pass           http://{{ apt_mirror }};
+        proxy_next_upstream  error timeout http_404;
+        proxy_set_header     Host            {{ apt_mirror }};
+        proxy_set_header     X-Real-IP       $remote_addr;
+        proxy_set_header     X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        add_header  X-Mirror-Upstream-Status        $upstream_status;
+        add_header  X-Mirror-Upstream-Response-Time $upstream_response_time;
+        add_header  X-Mirror-Status                 $upstream_cache_status;
+    }
+}
