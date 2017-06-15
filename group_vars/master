@@ -35,4 +35,8 @@ tftp_root: /srv/tftp
 # for LAN nodes.
 apt_mirror: ftp.sjtu.edu.cn
 
+# UID of the first normal user created (can do sudo, which should
+# be used as the admin user later.)
+node_user_uid: 999
+
 # vim: set ft=yaml sw=2:
