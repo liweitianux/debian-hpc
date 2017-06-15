@@ -29,9 +29,7 @@ lan_netmask: 255.255.255.0
 
 tftp_root: /srv/tftp
 
-# Mirror from where to install packages
+# Mirror from where to install packages (HTTP), and security updates.
 apt_mirror: ftp.sjtu.edu.cn
-# Source for the security updates
-apt_security_host: ftp.sjtu.edu.cn
 
 # vim: set ft=yaml sw=2:
