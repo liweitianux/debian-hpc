@@ -6,8 +6,7 @@
 #
 
 server {
-    listen  80;
-    listen  [::]:80;
+    listen  {{ lan_ip }}:80;
 
     access_log  /var/log/nginx/nodes.access.log;
     error_log   /var/log/nginx/nodes.error.log;
