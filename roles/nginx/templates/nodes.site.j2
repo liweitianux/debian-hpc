@@ -1,17 +1,31 @@
 #
-# /etc/nginx/sites-available/apt-proxy.site
-# Nginx site: apt mirror proxy for LAN nodes
+# /etc/nginx/sites-available/nodes.site
+# Nginx site:
+# * APT mirror proxy for LAN nodes
+# * Serve extra files and configurations to nodes
 #
 
 server {
     listen  80;
     listen  [::]:80;
 
-    access_log  /var/log/nginx/apt.access.log;
-    error_log   /var/log/nginx/apt.error.log;
+    access_log  /var/log/nginx/nodes.access.log;
+    error_log   /var/log/nginx/nodes.error.log;
 
     allow  {{ lan_network }};
     deny   all;
+
+    root   /srv/www;
+    index  index.html index.htm;
+
+    location /nodes {
+         # Allow directory listing output
+        autoindex             on;
+        # Round file sizes kB, MB, GB
+        autoindex_exact_size  off;
+        # Show times in local time zone
+        autoindex_localtime   on;
+    }
 
     location /debian/ {
         try_files  $uri @mirror;
